@@ -1,0 +1,124 @@
+
+{% extends 'accounts/base.html' %}
+
+{% block navbar %}
+
+
+{% load static %}
+
+<section class="header-main border-bottom">
+	<div class="container">
+<div class="row align-items-center">
+	<div class="col-lg-2 col-md-3 col-6">
+		<a href="./" class="brand-wrap">
+			<img class="logo" src="{% static './images/logoo.png' %}">
+		</a> <!-- brand-wrap.// -->
+	</div>
+	 <!-- col.// -->
+</div> <!-- row.// -->
+	</div> <!-- container.// -->
+</section> <!-- header-main .// -->
+
+
+
+
+
+
+{% endblock %}
+
+{% block content %}
+
+<section class="section-conten padding-y" style="min-height:84vh">
+
+<!-- ============================ COMPONENT LOGIN   ================================= -->
+	<div class="card mx-auto" style="max-width: 380px; margin-top:100px;">
+      <div class="card-body">
+      <h4 class="card-title mb-4">Sign in</h4>
+      <form method="POST">{% csrf_token %}
+          <div class="form-group">
+			 <input type="text" class="form-control" name="username" id="name" onblur="nameValid()" required placeholder="Email Address" >
+          </div> <!-- form-group// -->
+          <span id="nameReq" class="formValid" style="display: none;color: red;">Field Required*</span>
+                        
+                <span id="nameLen" class="formValid" style="display: none;color: red;">Minimum 5 characters required*</span>
+          <div class="form-group">
+			<input type="password" class="form-control" name="password"  id="password" minlength="5" oninvalid="setCustomValidity(' ')" onchange="setCustomValidity('')" onblur="passValid()" placeholder="Password" >
+          </div> <!-- form-group// -->
+          <span id="passErr" class="formValid"  style="display: none;color: red;">Password is too short*</span>
+          <span id="passReq" class="formValid"  style="display: none;color: red;">Password required*</span>
+
+          
+          <div class="form-group">
+          	<a href="#" class="float-right" style="color: #fb641b;">Forgot password?</a> 
+           
+          </div> <!-- form-group form-check .// -->
+          <div class="form-group">
+              <button type="submit" onclick="login()" class="btn btn-block" style="background-color:#fb641b;color:white"> Login  </button>
+          </div> <!-- form-group// -->    
+      </form>
+      <p style="color: red;">{{err}}</p>
+      </div> <!-- card-body.// -->
+    </div> <!-- card .// -->
+
+     <p class="text-center mt-4">Don't have account? <a style="color: #fb641b;" href="{% url 'user_registration' %}">Sign up</a></p>
+     <br><br>
+<!-- ============================ COMPONENT LOGIN  END.// ================================= -->
+
+
+<script>
+    function nameValid() {
+        var text = document.getElementById("name").value;
+       
+    
+        if (text == "") {
+          document.getElementById("nameReq").style.display = "block";
+          document.getElementById("nameLen").style.display = "none";
+          document.getElementById("nameErr").style.display = "none";
+        } 
+        else if (text.length < 5) {
+          document.getElementById("nameLen").style.display = "block";
+          document.getElementById("nameReq").style.display = "none";
+          document.getElementById("nameErr").style.display = "none";
+        }
+        else {
+          document.getElementById("nameReq").style.display = "none";
+          document.getElementById("nameLen").style.display = "none";
+          document.getElementById("nameErr").style.display = "none";
+    
+        }
+      }
+    
+     
+	  function passValid() {
+        var text = document.getElementById("password").value;
+        
+    
+         if (text.length < 5) {
+          document.getElementById("passErr").style.display = "block";
+          document.getElementById("passReq").style.display = "none";
+          
+        }
+        else if(text.length == 0){
+            document.getElementById("passReq").style.display = "block";
+            document.getElementById("passErr").style.display = "none";
+  
+        }
+        else{
+          document.getElementById("passErr").style.display = "none";
+          document.getElementById("passReq").style.display = "none";
+    
+    
+        }
+        }
+
+    </script>
+
+</section>
+
+{% endblock %}
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+{% block footer %}
+
+
+{% endblock %}

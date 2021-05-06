@@ -1,0 +1,53 @@
+{% extends 'admin/index.html' %}
+
+
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div style="margin-left: 300px;">
+        <h1>Add Products</h1>
+        <hr>
+
+    <form method="POST" enctype="multipart/form-data" id="productForm" data-brand-url="{% url 'ajax_load_brands' %}">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_category").change(function () {
+        const url = $("#productForm").attr("data-brand-url");  // get the url of the `load_cities` view
+        const categoryId = $(this).val();  // get the selected country ID from the HTML input
+        console.log(categoryId)
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+            data: {
+                'category_id': categoryId      // add the country id to the GET parameters
+            },
+            
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                console.log(data)
+                $("#id_brand").html(data);  // replace the contents of the city input with the data that came from the server
+                /*
+
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (city) {
+                    html_data += `<option value="${city.id}">${city.name}</option>`
+                });
+                console.log(html_data);
+                $("#id_city").html(html_data);
+
+                */
+            }
+        });
+
+    });
+</script>
+
+{% endblock %}
+
+    

@@ -1,0 +1,82 @@
+
+{% extends 'accounts/base.html' %}
+
+
+{% block content %}
+{% load static %}
+<section class="section-intro">
+	<div class="container">
+	
+	<div class="intro-banner-wrap">
+		<img src="{% static 'images/banners/banner.png' %}" class="img-fluid rounded">
+	</div>
+	
+	</div> <!-- container //  -->
+	</section>
+
+<section class="section-name padding-y-sm">
+	<div class="container">
+	
+	<header class="section-heading">
+		<a href="" class="btn btn-outline-primary float-right">See all</a>
+		<h3 class="section-title">Mobile Phones</h3>
+	</header><!-- sect-heading -->
+
+	<div class="row">
+	{% for product in products|slice:":4" %}
+        <a href="{% url 'product_details' product.id %}">
+		<div class="col-md-3">
+			<div class="card card-product-grid">
+				<a href="{% url 'product_details' product.slug %}" class="img-wrap"> <img src="{{ product.image1.url }}"> </a>
+				<figcaption class="info-wrap">
+					<a href="{% url 'product_details' product.slug %}" class="title">{{ product.product_name }}</a>
+					<div class="price mt-1">${{product.price}}</div> 
+					
+				</figcaption>
+			</div>
+		</div> 
+	</a>
+
+		{% endfor %}
+
+		
+	</div> <!-- row.// -->
+	
+	</div><!-- container // -->
+	</section>
+
+	<section class="section-name padding-y-sm">
+		<div class="container">
+		
+		<header class="section-heading">
+			<a href="./store.html" class="btn btn-outline-primary float-right">See all</a>
+			<h3 class="section-title">Laptops</h3>
+		</header><!-- sect-heading -->
+		<div class="row">
+			{% for pro in prod|slice:":4" %}
+			
+				<div class="col-md-3">
+					<div class="card card-product-grid">
+						<a href="{% url 'product_details' pro.slug %}" class="img-wrap"> <img src="{{ pro.image1.url }}"> </a>
+						<figcaption class="info-wrap">
+							<a href="{% url 'product_details' pro.slug %}" class="title">{{ pro.product_name }}</a>
+							<div class="price mt-1">${{pro.price}}</div> 
+							
+						</figcaption>
+					</div>
+				</div> 
+		
+				{% endfor %}
+	
+		
+		</div><!-- container // -->
+		</section>
+
+
+
+
+		{% endblock %}
+	
+		
+		
+	

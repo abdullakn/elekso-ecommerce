@@ -1,0 +1,186 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<section class="section-content padding-y bg">
+<div class="container">
+
+<!-- ============================ COMPONENT 1 ================================= -->
+<div class="card">
+	<div class="row no-gutters">
+		<aside class="col-md-6">
+			<!-- <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css"/>
+
+			<div class="show" href="1.jpg">
+				<img src="{{ products.image1.url }}" id="show-img">
+			  </div>
+		  -->
+			  <!-- Secondary carousel image thumbnail gallery -->
+		  
+			  <!-- <div class="small-img">
+			   <img src="images/next-icon.png" class="icon-left" alt="" id="prev-img">
+				<div class="small-container">
+				 <div id="small-img-roll">
+				   <img src="{{ products.image1.url }}" class="show-small-img" alt="">
+				   <img src="{{ products.image2.url }}" class="show-small-img" alt="">
+				   <img src="{{ products.image3.url }}" class="show-small-img" alt="">
+				   <img src="{{ products.image4.url }}" class="show-small-img" alt="">
+				 </div>
+				</div>
+			   <img src="images/next-icon.png" class="icon-right" alt="" id="next-img">
+			  </div> --> -->
+
+			  <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+<!-- 
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/zoom-image.js' %}" ></script> -->
+<article class="gallery-wrap d-flex "> 
+	<div style="width:70px;height:300px;background-color:white;margin-top:80px">
+		<a href="#"><img id="side-img1" onclick="img1Display()" class="img-thumbnail" src="{{ products.image1.url }}" width="70px" height="70px" style="margin-bottom: 5px;"></a>
+		<a href="#"><img id="side-img2" onclick="img2Display()" class="img-thumbnail" src="{{ products.image2.url }}" width="70px" height="70px" style="margin-bottom: 5px;"></a>
+		<a href="#"><img id="side-img3"  onclick="img3Display()" class="img-thumbnail" src="{{ products.image3.url }}" width="70px" height="70px" style="margin-bottom: 5px;"></a>
+		<a href="#"><img id="side-img4"  onclick="img4Display()" class="img-thumbnail" src="{{ products.image4.url }}" width="70px" height="70px" style="margin-bottom: 5px;"></a>
+	
+	
+
+
+	</div>
+	<div class="img-big-wrap " id="img-container">
+	   <a href="#"><img id="img1" src="{{ products.image1.url }}"></a>
+	   <a href="#"><img id="img2"  src="{{ products.image2.url }}" style="display: none "></a>
+	   <a href="#"><img id="img3" src="{{ products.image3.url }}" style="display: none "></a>
+	   <a href="#"><img id="img4" src="{{ products.image4.url }}" style="display: none "></a>
+	</div>
+
+
+	<script>
+		var s_img1=document.getElementById("side-img1");
+		var s_img2=document.getElementById("side-img2");
+		var s_img3=document.getElementById("side-img3");
+		var s_img4=document.getElementById("side-img4");
+
+
+
+		var img1=document.getElementById("img1");
+		var img2=document.getElementById("img2");
+		var img3=document.getElementById("img3");
+		var img4=document.getElementById("img4");
+
+
+		function img1Display(){
+			img1.style.display="block";
+			img2.style.display="none";
+			img3.style.display="none";
+			img4.style.display="none";
+
+		}
+
+		
+		function img2Display(){
+			img2.style.display="block";
+			img1.style.display="none";
+			img3.style.display="none";
+			img4.style.display="none";
+
+		}
+		
+		function img3Display(){
+			img2.style.display="none";
+			img1.style.display="none";
+			img3.style.display="block";
+			img4.style.display="none";
+
+		}
+		
+		function img4Display(){
+			img2.style.display="none";
+			img1.style.display="none";
+			img3.style.display="none";
+			img4.style.display="block";
+
+		}
+	</script>
+</article> 
+		</aside>
+		<main class="col-md-6 border-left">
+<article class="content-body">
+
+<h2 class="title">{{products.product_name}}</h2>
+
+<div class="mb-3"> 
+	<var class="price h4">${{products.price}}</var> 
+</div> 
+
+<p>{{products.description}}	</p>
+
+
+<hr>
+	<ul>
+		<li>Included all Taxes</li>
+		<li><span style="color: tomato;">Free Delivery: </span>within 7 days</li>
+	</ul>
+	<hr>
+	<table class="table table-bordered">
+	<tr><th>Available offer</th></tr>
+		  <tr>
+			<td><span style="color: green;">Bank Offer:</span> 10% off on HDFC Bank Credit Card and Credit</td>
+			
+		  </tr>
+		  <tr><td><span style="color: green;"> Exchange Offer:</span>  Up to ₹ 17,500.00 off on Exchange</td></tr>
+		 
+
+	
+		
+	</table>
+	<a href="./product-detail.html" class="btn" style="background-color: #fb641b;color:white"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
+</article> <!-- product-info-aside .// -->
+		</main> <!-- col.// -->
+	</div> <!-- row.// -->
+</div> <!-- card.// -->
+<!-- ============================ COMPONENT 1 END .// ================================= -->
+<br>
+<div class="row">
+	
+		<div class="col-md-5" style="margin:0px 60px;padding:5px;height: 210px; width:200px; background-color:F8F3F3;border:5px solid rgb(219, 215, 215)">
+           <p style="text-align: center;"><b>Services</b></p>
+		   <hr>
+		   <ul>
+	         <li>	   <p>One year Warrenty on Products</p></li>
+			 <hr>
+	         <li>	   <p>7 Days Replacement Policy</p></li>
+			 <hr>
+	         <li>	   <p>Cash on Delivery Available</p></li>
+			 <hr>
+		   </ul>
+		</div>
+		<div class="col-md-5" style=" margin:0 20px;padding:5px;height: 320px; width:200px; background-color:F8F3F3;border:5px solid rgb(219, 215, 215)">
+			<p style="text-align: center;"><b>Product Specification</b></p>
+			<hr>
+			<ul>
+			  <li>	   <p>Processor  :   {{products.processor}} </p></li>
+			  <hr>
+			  <li>	   <p>RAM     :  {{products.ram}}</p></li>
+			  <hr>
+			  <li>	   <p>Storage   : {{products.storage}} GB</p></li>
+			  <hr>
+			  <li>	   <p>Color   : {{products.color}} </p></li>
+			  <hr>
+			  <li>	   <p>Battery Backup  : Upto 7 hours </p></li>
+			  <hr>
+			  
+			</ul>
+		 </div>
+		</div>
+		
+	
+		
+	
+		
+		
+
+	
+</div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+
+{% extends 'admin/index.html' %}
+
+
+{% block content %}
+
+<div style="margin-left: 300px;">
+
+    <h1>Add Brand</h1>
+    <hr>
+
+<form method="POST">
+    {% csrf_token %}
+    category:
+    <select name="category" id="category"  required>
+        {% for category in categories %}
+          <option value="{{category.id}}">{{category.name}}</option>
+        {% endfor %}
+    </select>
+    <br>
+    Brand:
+    <input type="text" name="brand">
+    <input type="submit" name="" id="">
+    
+  
+</form>
+
+</div>
+
+
+
+{% endblock %}
+
+
+

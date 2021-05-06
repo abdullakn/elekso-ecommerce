@@ -1,0 +1,210 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="cache-control" content="max-age=604800" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Elekso</title>
+{% load static %}
+<link href="{% static 'images/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+
+<!-- jQuery -->
+<!-- <script src="{% static 'js/jquery-2.0.0.min.js' %}" type="text/javascript"></script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+<!-- Bootstrap4 files-->
+<script src="{% static 'js/bootstrap.bundle.min.js' %}" type="text/javascript"></script>
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+
+<!-- Font awesome 5 -->
+<link href="{% static 'fonts/fontawesome/css/all.min.css' %}" type="text/css" rel="stylesheet">
+
+<!-- custom style -->
+<link href="{% static 'css/ui.css' %}" rel="stylesheet" type="text/css"/>
+<!-- <link href="{% static 'css/zoomcss.css' %}" rel="stylesheet" type="text/css"/> -->
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet" media="only screen and (max-width: 1200px)" />
+
+<!-- custom javascript -->
+<script src="{% static 'js/script.js' %}" type="text/javascript"></script>
+
+<!-- <script src="{% static 'js/mainjs.js' %}"></script>
+<script src="{% static 'js/zoom-image.js' %}" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+<script type="text/javascript">
+
+/// some script
+
+// jquery ready start
+$(document).ready(function() {
+	// jQuery code
+
+}); 
+// jquery end
+</script>
+
+</head>
+
+
+<body>
+
+
+<header class="section-header">
+  
+<hr>
+
+{% block navbar %}
+
+<section class="header-main border-bottom">
+	<div class="container">
+<div class="row align-items-center">
+	<div class="col-lg-2 col-md-3 col-6">
+		<a href="./" class="brand-wrap">
+			<img class="logo" src="{% static './images/logoo.png' %}" width="200px" height="100px">
+		</a> <!-- brand-wrap.// -->
+	</div>
+	<div class="col-lg col-sm col-md col-6 flex-grow-0">
+		<div class="category-wrap dropdown d-inline-block float-right">
+			<button type="button" class="btn  dropdown-toggle" style="background-color:#fb641b; color:white" data-toggle="dropdown"> 
+				<i class="fa fa-bars"></i> All category 
+			</button>
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="">Mobile Phones </a>
+				<a class="dropdown-item" href="#">laptops </a>
+				
+			</div>
+		</div>  <!-- category-wrap.// -->
+	</div> <!-- col.// -->
+	
+	<div class="col-lg  col-md-6 col-sm-12 col">
+		<form action="#" class="search">
+			<div class="input-group w-100">
+			    <input type="text" class="form-control" style="width:60%;" placeholder="Search">
+			    
+			    <div class="input-group-append">
+			      <button class="btn" style="background-color: #fb641b;color:white" type="submit">
+			        <i class="fa fa-search"></i>
+			      </button>
+			    </div>
+		    </div>
+		</form> <!-- search-wrap .end// -->
+	</div> <!-- col.// -->
+	<div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
+				<div class="d-flex justify-content-end mb-3 mb-lg-0">
+					<div class="widget-header">
+						<small class="title text-muted">Welcome </small>
+						<div> 
+                            {% if request.user.is_authenticated %}
+
+							<a href="./signin.html">{{request.user}}</a> <span class="dark-transp"> | </span>
+							<a href="{% url 'user_logout' %}">Logout</a>
+
+                            {% else %}
+
+                            <a href="{% url 'login' %}">Sign in</a> <span class="dark-transp"> | </span>
+							<a href="{% url 'user_registration' %}"> Register</a>
+
+
+                            {% endif %}
+						</div>
+					</div>
+					<a href="./cart.html" class="widget-header pl-3 ml-3">
+						<div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
+						<span class="badge badge-pill badge-danger notify">0</span>
+					</a>
+				</div> <!-- widgets-wrap.// -->
+			</div> <!-- col.// -->
+</div> <!-- row.// -->
+	</div> <!-- container.// -->
+</section> <!-- header-main .// -->
+
+
+{% endblock %}
+
+
+
+
+</header> <!-- section-header.// -->
+
+{% block content %}
+<!-- ========================= SECTION MAIN ========================= -->
+
+<!-- ========================= SECTION  END// ========================= -->
+
+
+{% endblock %}
+	
+{% block footer %}
+<!-- ========================= FOOTER ========================= -->
+<footer class="section-footer border-top bg-dark text-white pt-3">
+	<div class="container">
+	<div class="row">
+		<div class="col-md-2">
+			<p style="color: rgb(94, 99, 99);"><b>HELP</b></p>
+			
+			<p style="font-size: 13px;">Payment</p>
+			<p style="font-size: 13px;">Shipping</p>
+			<p style="font-size: 13px;">cancellation & Return</p>
+			<p style="font-size: 13px;">FAQ</p>
+		
+			
+		</div>
+		<div class="col-md-2">
+
+			<p style="color: rgb(94, 99, 99);"><b>POLICY</b></p>
+			
+			<p style="font-size: 13px;">Return Policy</p>
+			<p style="font-size: 13px;">Terms of Use</p>
+			<p style="font-size: 13px;">Security</p>
+			<p style="font-size: 13px;">Privacy</p>
+			<p style="font-size: 13px;">Sitemap</p>
+			<p style="font-size: 13px;">ERP Compliance</p>
+		
+
+		</div>
+		<div class="col-md-2">
+
+			<p style="color: rgb(94, 99, 99);"><b>SOCIAL</b></p>
+			
+			<p style="font-size: 13px;">Facebook</p>
+			<p style="font-size: 13px;">Twitter</p>
+			<p style="font-size: 13px;">YouTube</p>
+			
+		</div>
+		
+		<div class="col-md-3">
+
+			<p style="color: rgb(94, 99, 99);"><b>Mail US:</b></p>
+
+			
+			<p style="font-size: 13px;">Elekso <br>Bengluru<br>Karnataka<br><br>	</p>
+			<!-- <p style="font-size: 13px;">Bengluru</p>
+			<p style="font-size: 13px;">karnataka</p>
+			<p style="font-size: 13px;">India</p> -->
+		
+
+
+
+		</div>
+		<div class="col-md-3">
+			<p style="color: rgb(94, 99, 99);"><b>Registered office address</b></p>
+			
+			<p style="font-size: 13px;">Elekso</p>
+			<p style="font-size: 13px;">Bengluru</p>
+			<p style="font-size: 13px;">Karnataka,India</p>
+			<p style="font-size: 13px;">Contact:0497 3454568</p>
+			
+
+		</div>
+	</div>
+	<br>
+	<hr>
+	</div><!-- //container -->
+</footer>
+
+{% endblock %}
+<!-- ========================= FOOTER END // ========================= -->
+
+</body>
+</html>

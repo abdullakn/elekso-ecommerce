@@ -1,0 +1,208 @@
+
+
+{% extends 'accounts/base.html' %}
+
+
+{% block navbar %}
+
+
+{% load static %}
+
+<section class="header-main border-bottom">
+	<div class="container">
+<div class="row align-items-center">
+	<div class="col-lg-2 col-md-3 col-6">
+		<a href="./" class="brand-wrap">
+			<img class="logo" src="{% static './images/logoo.png' %}" width="200px" height="150px">
+		</a> <!-- brand-wrap.// -->
+	</div>
+	 <!-- col.// -->
+</div> <!-- row.// -->
+	</div> <!-- container.// -->
+</section> <!-- header-main .// -->
+
+
+
+
+
+
+{% endblock %}
+
+{% block content %}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+
+<!-- ============================ COMPONENT REGISTER   ================================= -->
+	<div class="card mx-auto" style="max-width:520px; margin-top:40px;">
+      <article class="card-body">
+		<header class="mb-4"><h4 class="card-title">Sign up</h4></header>
+		<form method="POST">
+			{% csrf_token %}
+				
+					<div class="form-group">
+						<label>User Name</label>
+						<input type="text" class="form-control" id="username" name="username" placeholder="" onkeyup="checkuser()">
+						
+					</div><!-- form-group end.// -->
+					<span id="results"></span>
+				
+				<div class="form-group">
+					<label>Email</label>
+					<input type="email" class="form-control" name="email" placeholder="" required="required" id="email" oninvalid="setCustomValidity(' ')" onchange="setCustomValidity('')" onblur="emailValid()">
+					<small class="form-text text-muted">We'll never share your email with anyone else.</small>
+				</div> <!-- form-group end.// -->
+				<span id="emailReq" class="formValid"  style="display: none;color: red;">Field Required*</span>
+                <span id="emailErr" class="formValid"  style="display: none;color: red;">Invalid email*</span>
+				<div class="form-group">
+					<label>Phone Number</label>
+					<input type="text" class="form-control" name="phonenumber" placeholder="" required="required"  id="phone" oninvalid="setCustomValidity(' ')" onchange="setCustomValidity('')" onblur="phoneValid()">
+					
+				</div> <!-- form-group end.// -->
+
+				<span id="phoneReq" class="formValid"  style="display: none;color: red;">Field Required*</span>
+            <span id="phoneErr" class="formValid"  style="display: none;color: red;">only numbers*</span>
+			<span id="phoneLen" class="formValid"  style="display: none;color: red;">10 character*</span>
+				
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label>Create password</label>
+					    <input class="form-control" type="password" name="password" minlength="5" oninvalid="setCustomValidity(' ')" onchange="setCustomValidity('')" id="password" name="password"  required="required" onblur="passValid()" >
+					</div> <!-- form-group end.// --> 
+
+					
+					<div class="form-group col-md-6">
+						<label>Repeat password</label>
+					    <input class="form-control" type="password" name="confirmpassword" minlength="5" oninvalid="setCustomValidity(' ')" onchange="setCustomValidity('')" id="password" name="password"  required="required" onblur="passValid()">
+					</div> <!-- form-group end.// -->  
+					<span id="passErr" class="formValid"  style="display: none;color: red;">Password is too short*</span>
+					<span id="passReq" class="formValid"  style="display: none;color: red;">Password required*</span>
+					<span id="checkpass"></span>
+				</div>
+			    <div class="form-group">
+			        <button type="submit" class="btn  btn-block" style="background-color: #fb641b;"> Register  </button>
+			    </div> <!-- form-group// -->      
+			      <p style="color: red;"> {{err}}</p> 
+			</form>
+		</article><!-- card-body.// -->
+    </div> <!-- card .// -->
+    <p class="text-center mt-4">Have an account? <a style="color: #fb641b;" href="{% url 'login' %}">Log In</a></p>
+    <br><br>
+<!-- ============================ COMPONENT REGISTER  END.// ================================= -->
+
+
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+	function checkuser(){
+		let un=document.getElementById('username').value;
+		$.ajax({
+			url:"{% url 'check_user' %}",
+			type:"get",
+			data:{username:un},
+			success:function(data){
+				if(data=="available"){
+					$("#results").html("Username is Available").addClass("text-success");
+				}else{
+
+					$("#results").html("This username already taken").addClass("text-danger");
+
+				}
+			}
+		})
+		
+	}
+
+
+
+		              
+	function emailValid() {
+		var text = document.getElementById("email").value;
+		var regx = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+		if(text.length==0){
+			document.getElementById("emailReq").style.display = "block";
+	
+		}
+	
+		else if (!text.match(regx)) {
+		  document.getElementById("emailErr").style.display = "block";
+		  document.getElementById("emailReq").style.display = "none";
+		  
+		}
+		else{
+			document.getElementById("emailErr").style.display = "none";
+			document.getElementById("emailReq").style.display = "none";
+	
+		}
+		
+		}
+
+
+
+		function phoneValid() {
+			var text = document.getElementById("phone").value;
+			var reg=/^[0-9]+$/
+		   
+	  
+			if (text == "") {
+			  document.getElementById("phoneReq").style.display = "block";
+			  document.getElementById("phoneLen").style.display = "none";
+			  document.getElementById("phoneErr").style.display = "none";
+			} 
+			else if (text.length < 10) {
+			  document.getElementById("phoneLen").style.display = "block";
+			  document.getElementById("phoneReq").style.display = "none";
+			  document.getElementById("phoneErr").style.display = "none";
+			}
+			else if(!text.match(reg)){
+				document.getElementById("phoneLen").style.display = "none";
+				document.getElementById("phoneReq").style.display = "none";
+				document.getElementById("phoneErr").style.display = "block";
+	
+			}
+			else {
+			  document.getElementById("phoneReq").style.display = "none";
+			  document.getElementById("phoneLen").style.display = "none";
+			  document.getElementById("phonErr").style.display = "none";
+	  
+			}
+		  }
+
+
+
+		  
+	  function passValid() {
+        var text = document.getElementById("password").value;
+        
+    
+         if (text.length < 5) {
+          document.getElementById("passErr").style.display = "block";
+          document.getElementById("passReq").style.display = "none";
+          
+        }
+        else if(text.length == 0){
+            document.getElementById("passReq").style.display = "block";
+            document.getElementById("passErr").style.display = "none";
+
+        }
+        else{
+          document.getElementById("passErr").style.display = "none";
+          document.getElementById("passReq").style.display = "none";
+    
+    
+        }
+        }
+
+	
+	
+
+</script>
+
+{% endblock %}
+
+
+{% block footer %}
+
+
+{% endblock %}
