@@ -18,9 +18,10 @@ class Brand(models.Model):
         return self.brand
 
 class Product_Table(models.Model):
+    product_name = models.CharField(max_length=50,default="")
     category = models.ForeignKey(Category,on_delete=models.CASCADE)  
     brand = models.ForeignKey(Brand,on_delete=models.CASCADE)
-    product_name = models.CharField(max_length=50,default="")
+    
     price=models.IntegerField()
     stock=models.IntegerField()
     description=models.CharField(max_length=500,default="")

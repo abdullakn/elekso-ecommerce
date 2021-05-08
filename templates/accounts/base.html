@@ -69,11 +69,14 @@ $(document).ready(function() {
 			<button type="button" class="btn  dropdown-toggle" style="background-color:#fb641b; color:white" data-toggle="dropdown"> 
 				<i class="fa fa-bars"></i> All category 
 			</button>
+
+			{% block dropdown %}
 			<div class="dropdown-menu">
 				<a class="dropdown-item" href="">Mobile Phones </a>
-				<a class="dropdown-item" href="#">laptops </a>
+				<a class="dropdown-item" href="">laptops </a>
 				
 			</div>
+			{% endblock %}
 		</div>  <!-- category-wrap.// -->
 	</div> <!-- col.// -->
 	

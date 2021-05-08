@@ -1,6 +1,15 @@
 
 {% extends 'accounts/base.html' %}
 
+{% block dropdown %}
+<div class="dropdown-menu">
+	{% for cat in category %}
+	<a class="dropdown-item" href="{% url 'product_store' cat.slug %}">{{cat.name}}</a>
+	
+	{% endfor %}
+</div>
+{% endblock %}
+
 
 {% block content %}
 {% load static %}

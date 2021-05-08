@@ -14,5 +14,5 @@ urlpatterns=[
     path('product_details/<slug:slug>/',views.product_details,name='product_details'),
     path('check_user/',views.check_user,name='check_user') ,
     path('admin_logout/',views.admin_logout,name='admin_logout'),
-    path('product_store/<int:id>/',views.product_store,name='product_store')
+    path('product_store/<str:slug>/',views.product_store,name='product_store')
 ]

@@ -83,6 +83,11 @@ class Login(View):
 
 
 def user_home(request):
+    print(request.user)
+
+    category=Category.objects.all()
+    print(category)
+
     prod=Product_Table.objects.filter(category=1)
     product=Product_Table.objects.filter(category=2)
     # print(prod1)
@@ -90,7 +95,7 @@ def user_home(request):
     # Product_Table.objects.all()
     
     
-    return render(request,'accounts/index.html',{'products':prod,'prod':product})  
+    return render(request,'accounts/index.html',{'products':prod,'prod':product,'category':category})  
 
 
 def user_logout(request):
@@ -139,7 +144,7 @@ def admin_login(request):
             return redirect('admin_home')
             
         else:
-            return render(request,'accounts/admin_login.html')
+            return render(request,'accounts/admin_login.html',{'err':"username or passwords is incorrec"})
     else:
         return redirect(request,'accounts/admin_login.html')         
 
@@ -150,9 +155,11 @@ def admin_login(request):
 class AdminLogin(View):
     def get(self,request):
         if request.session.has_key('admin'):
-           return redirect('admin_home')
-        else:
-            return render(request,'accounts/admin_login.html')
+            return redirect('admin_home')
+            # return render(request,'admin/admin_home.html')
+        # else:
+        #     return render(request,'accounts/admin_login.html')
+        return render(request,'accounts/admin_login.html')
 
 
     def post(self,request):
@@ -166,7 +173,8 @@ class AdminLogin(View):
             return redirect('admin_home') 
             
         else:
-            return render(request,'admin/index.html')
+            return render(request,'accounts/admin_login.html',{'err':"invalid username or password"})
+            # return redirect('admin_login')
        
 
 
@@ -200,10 +208,12 @@ def product_details(request,slug):
         return render(request,'accounts/product-detail.html',{'products':product})   
 
 
-def product_store(request,id):
-    product=Product_Table.objects.get(id=id)
-    print(product.category.slug)
-    return render(request,'accounts/store.html')        
+def product_store(request,slug):
+    category=Category.objects.get(slug=slug)
+    product=Product_Table.objects.filter(category=category)
+    count=product.count()
+    print(count)
+    return render(request,'accounts/store.html',{'products':product,'count':count})        
         
 
 

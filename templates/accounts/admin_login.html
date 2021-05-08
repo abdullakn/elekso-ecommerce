@@ -71,11 +71,13 @@ $(document).ready(function() {
       <h4 class="card-title mb-4">Admin Login</h4>
       <form method="POST">{% csrf_token %}
           <div class="form-group">
-			 <input type="text" class="form-control" name="username" placeholder="Email Address" >
+			 <input type="text" class="form-control" name="username" placeholder="User Name" >
           </div> <!-- form-group// -->
           <div class="form-group">
 			<input type="password" class="form-control" name="password" placeholder="Password" >
           </div> <!-- form-group// -->
+            <p style="color: red;"> {{err}}</p>
+		 
           
           <div class="form-group">
           	<a href="#" class="float-right" style="color:#fb641b;">Forgot password?</a> 

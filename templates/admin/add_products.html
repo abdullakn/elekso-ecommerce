@@ -12,9 +12,86 @@
     <form method="POST" enctype="multipart/form-data" id="productForm" data-brand-url="{% url 'ajax_load_brands' %}">
         {% csrf_token %}
         {{ form|crispy }}
+            <canvas id="canvas"></canvas>
+       Image 1: <img id="image1" src="#" alt="image1" width="100px" height="100px" />
+       Image 2: <img id="image2" src="#" alt="image1" width="100px" height="100px" />
+       Image 3: <img id="image3" src="#" alt="image1" width="100px" height="100px" />
+       Image 4: <img id="image4" src="#" alt="image1" width="100px" height="100px" />
         <input type="submit" value="Submit">
     </form>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          
+          reader.onload = function(e) {
+            $('#image1').attr('src', e.target.result);
+          }
+          
+          reader.readAsDataURL(input.files[0]); // convert to base64 string
+          
+        }
+      }
+      
+      $("#id_image1").change(function() {
+        readURL(this);
+      });
+
+      function readURL4(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          
+          reader.onload = function(e) {
+            $('#image2').attr('src', e.target.result);
+          }
+          
+          reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+      }
+      
+      $("#id_image2").change(function() {
+        readURL4(this);
+      });
+
+      function readURL2(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          
+          reader.onload = function(e) {
+            $('#image3').attr('src', e.target.result);
+          }
+          
+          reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+      }
+      
+      $("#id_image3").change(function() {
+        readURL2(this);
+      });
+
+      function readURL3(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          
+          reader.onload = function(e) {
+            $('#image4').attr('src', e.target.result);
+            var $image = $('#image4');
+
+            
+          }
+          
+          reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+      }
+      
+      $("#id_image4").change(function() {
+        readURL3(this);
+      });
+</script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
@@ -47,6 +124,10 @@
 
     });
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js"></script>
+
+<script></script>
 
 {% endblock %}
 
