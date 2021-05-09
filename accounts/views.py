@@ -8,6 +8,8 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from  django.contrib.sessions.models import Session
 from django.views.decorators.cache import cache_control
+from cart.models import *
+from cart.views import _cart_id
 
 # Create your views here.
 
@@ -204,8 +206,10 @@ def product_details(request,slug):
         list_pro=Product_Table.objects.filter(category=pro.id)
         print(list_pro)
         product=Product_Table.objects.get(slug=slug)
+        in_cart=CartItem.objects.filter(cart__cart_id=_cart_id(request),product=product).exists()
         print(product.category.slug)
-        return render(request,'accounts/product-detail.html',{'products':product})   
+        
+        return render(request,'accounts/product-detail.html',{'products':product,'in_cart':in_cart})   
 
 
 def product_store(request,slug):

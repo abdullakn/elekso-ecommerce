@@ -121,6 +121,7 @@
 <div class="row">
 
   {% for product in products %}
+  <a href="{% url 'product_details' product.slug %}">
 	<div class="col-md-4">
 		<figure class="card card-product-grid">
 			<div class="img-wrap"> 
@@ -136,12 +137,12 @@
 						
 					</div> <!-- price-wrap.// -->
 				</div>
-				<a href="#" class="btn btn-block btn-success">Added to cart </a>
+				<a href="{% url 'add_cart' product.id %}" class="btn btn-block btn-success">Added to cart </a>
 			</figcaption>
 		</figure>
 	</div> <!-- col.// -->
 
-
+</a>
 	{% endfor %}
 
 

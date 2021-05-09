@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -35,6 +36,11 @@ class Product_Table(models.Model):
     image2 = models.ImageField(upload_to='prd_img', null=True, blank=True)
     image3 = models.ImageField(upload_to='prd_img', null=True, blank=True)
     image4 = models.ImageField(upload_to='prd_img', null=True, blank=True)
+
+
+
+    def get_url(self):
+        return reverse('product_details',args=[self.slug])
 
 
 
