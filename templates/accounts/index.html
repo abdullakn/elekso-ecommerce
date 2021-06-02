@@ -35,12 +35,21 @@
 	{% for product in products|slice:":4" %}
         <a href="{% url 'product_details' product.id %}">
 		<div class="col-md-3">
+
+			{% if product.offer_percentage == None %}
+			<p></p>
+			{% else %}
+			<p style="position: absolute;background-color:green;z-index:1;color:white;padding:10px 20px;border-radius:5px">{{product.offer_percentage}}% off</p>
+
+			{% endif %}
 			<div class="card card-product-grid">
-				<a href="{% url 'product_details' product.slug %}" class="img-wrap"> <img src="{{ product.image1.url }}"> </a>
+				
+				<a href="{% url 'product_details' product.slug %}" class="img-wrap"> <img src="{{ product.image2.url }}"> </a>
 				<figcaption class="info-wrap">
 					<a href="{% url 'product_details' product.slug %}" class="title">{{ product.product_name }}</a>
 					<div class="price mt-1">${{product.price}}</div> 
 					
+					<a href="{% url 'add_cart' product.id %}" class="btn" style="background-color: #fb641b;color:white"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
 				</figcaption>
 			</div>
 		</div> 
@@ -65,11 +74,21 @@
 			{% for pro in prod|slice:":4" %}
 			
 				<div class="col-md-3">
+					
+			{% if pro.offer_percentage == None %}
+			<p></p>
+			{% else %}
+			<p style="position: absolute;background-color:green;z-index:1;color:white;padding:10px 20px;border-radius:5px">{{pro.offer_percentage}}% off</p>
+
+			{% endif %}
+					
 					<div class="card card-product-grid">
 						<a href="{% url 'product_details' pro.slug %}" class="img-wrap"> <img src="{{ pro.image1.url }}"> </a>
 						<figcaption class="info-wrap">
 							<a href="{% url 'product_details' pro.slug %}" class="title">{{ pro.product_name }}</a>
 							<div class="price mt-1">${{pro.price}}</div> 
+				     	<a href="{% url 'add_cart' pro.id %}" class="btn" style="background-color: #fb641b;color:white"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
+
 							
 						</figcaption>
 					</div>

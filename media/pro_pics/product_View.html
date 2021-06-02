@@ -1,0 +1,147 @@
+
+
+{% extends 'user/base.html' %}
+{% load static %}
+{% block contend %}
+
+<link rel="stylesheet" type="text/css" href="{% static '/css/style.css'%}">
+
+<section class="section-content padding-y bg">
+<div class="container">
+
+<!-- ============================ COMPONENT 1 ================================= -->
+<div class="card" style="border: solid 1px black;">
+
+	<div class="row no-gutters">
+		<aside class="col-md-6" style="position:relative">
+			<div class="show" href="{{prod.image1.url}}" style="position: absolute;">
+				<img src="{{prod.image1.url}}" id="show-img" style="margin: 10px; border: solid 1px;">
+			  </div>
+
+		 
+			  <div  class="small-img" >
+			  
+				<div class="small-container">
+				 <div id="small-img-roll">
+				   <img src="{{prod.image1.url}}" class="show-small-img" alt="">
+				   <img src="{{prod.image2.url}}" class="show-small-img" alt="">
+				   <img src="{{prod.image3.url}}" class="show-small-img" alt="">
+				   <img src="{{prod.image4.url}}" class="show-small-img" alt="">
+				 </div>
+				</div>
+			   
+			  </div>
+			  <script src="{% static '/js/zoom-image.js'%}"></script>
+				<script src="{% static '/js/main.js' %}"></script>	
+		 
+		</aside>
+<main class="col-md-6 border-left">
+<article class="content-body">
+
+<h2 class="title">{{prod.product_name}}</h2>
+
+<div class="mb-3"> 
+	<var class="price h4">₹{{prod.price}}</var> 
+</div> 
+
+<p>{{prod.description}}</p>
+
+
+<div class="mb-3"> 
+    <label for="">Brand:</label>
+	<var class="price h4">{{prod.brand}}</var> 
+</div> 
+<div class="mb-3"> 
+    <label for="">Model:</label>
+	<var class="price h4">{{prod.model_name}}</var> 
+</div> 
+
+<div class="mb-3"> 
+    <label for="">Strap color:</label>
+	<var class="price h4">{{prod.strap_colour}}</var> 
+</div> 
+<div class="mb-3"> 
+	<label for="">strap material:</label>
+    <var class="price h4">{{prod.strapmaterial}}</var> 
+</div> 
+{% if prod.stock <= 0%}
+<h4 style="color:red;">out of stock</h4>
+{%else%}
+{% if in_cart %}
+
+<a href="" class="btn  btn-success">Added to cart </a>
+<a href="{% url 'cart' %}" class="btn btn-dark"> Go to cart</a>
+{% else %}
+<a href="{% url 'add_to_cart' prod.id %}" class="btn btn-block btn-dark">Add to cart </a>
+
+{% endif %}
+{%endif %}
+</article> 
+		</main> <!-- col.// -->
+	</div> 
+	
+
+</div> <!-- card.// -->
+
+<!-- ============================ COMPONENT 1 END .// ================================= -->
+
+<br>
+
+<!-- <div class="row">
+			<div class="col-md-9">
+
+	<header class="section-heading">
+		<h3>Customer Reviews </h3>  
+		
+	</header>
+
+	<article class="box mb-3">
+		<div class="icontext w-100">
+			<img src="./images/avatars/avatar1.jpg" class="img-xs icon rounded-circle">
+			<div class="text">
+				<span class="date text-muted float-md-right">24.04.2020 </span>  
+				<h6 class="mb-1">Mike John </h6>
+				
+			</div>
+		</div>  icontext.// 
+		<div class="mt-3">
+			<p>
+				Dummy comment Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip
+			</p>	
+		</div>
+	</article> -->
+
+	
+
+	</div> 
+</div> 
+
+</div> 
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+
+
+<script>
+	var options1 = {
+		width: 400,
+		height: 400,
+		zoomWidth: 500,
+		offset: {vertical: 30, horizontal: -20}
+	};
+	
+	// If the width and height of the image are not known or to adjust the image to the container of it
+	var options2 = {
+		fillContainer: true,
+		offset: {vertical: 0, horizontal: 10}
+	};
+	new ImageZoom(document.getElementById("img-container"), options2);
+	
+	</script>
+
+
+
+
+{% endblock %}

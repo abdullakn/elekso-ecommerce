@@ -19,20 +19,26 @@
 <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
 
 <!-- Font awesome 5 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="{% static 'fonts/fontawesome/css/all.min.css' %}" type="text/css" rel="stylesheet">
 
 <!-- custom style -->
 <link href="{% static 'css/ui.css' %}" rel="stylesheet" type="text/css"/>
+<link href="{% static 'css/custom.css' %}" rel="stylesheet" type="text/css"/>
 <!-- <link href="{% static 'css/zoomcss.css' %}" rel="stylesheet" type="text/css"/> -->
 <link href="{% static 'css/responsive.css' %}" rel="stylesheet" media="only screen and (max-width: 1200px)" />
 
 <!-- custom javascript -->
 <script src="{% static 'js/script.js' %}" type="text/javascript"></script>
 
+<script src="https://www.paypal.com/sdk/js?client-id=AZb2Yl9zjxi0w_ZN0M7YLlb5rTkuaC9OlM-SjaJRNliiR0Ow-god3GSYChC4ca-qWwKvMGpsZOyz9Xpj&currency=USD"></script>
+
 <!-- <script src="{% static 'js/mainjs.js' %}"></script>
 <script src="{% static 'js/zoom-image.js' %}" type="text/javascript"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 <script type="text/javascript">
+
+
 
 /// some script
 
@@ -42,7 +48,9 @@ $(document).ready(function() {
 
 }); 
 // jquery end
-</script>
+</script>   
+{% block style %}
+{% endblock %}
 
 </head>
 
@@ -60,7 +68,7 @@ $(document).ready(function() {
 	<div class="container">
 <div class="row align-items-center">
 	<div class="col-lg-2 col-md-3 col-6">
-		<a href="./" class="brand-wrap">
+		<a href="{% url 'user_home' %}" class="brand-wrap">
 			<img class="logo" src="{% static './images/logoo.png' %}" width="200px" height="100px">
 		</a> <!-- brand-wrap.// -->
 	</div>
@@ -81,12 +89,12 @@ $(document).ready(function() {
 	</div> <!-- col.// -->
 	
 	<div class="col-lg  col-md-6 col-sm-12 col">
-		<form action="#" class="search">
+		<form action="{% url 'search_product' %}" class="search" method="GET">
 			<div class="input-group w-100">
-			    <input type="text" class="form-control" style="width:60%;" placeholder="Search">
+			    <input type="text" class="form-control" style="width:60%;" placeholder="Search" name="keyword">
 			    
 			    <div class="input-group-append">
-			      <button class="btn" style="background-color: #fb641b;color:white" type="submit">
+			      <button class="btn" style="background-color: #fb641b;color:white" type="submit" >
 			        <i class="fa fa-search"></i>
 			      </button>
 			    </div>
@@ -100,7 +108,7 @@ $(document).ready(function() {
 						<div> 
                             {% if request.user.is_authenticated %}
 
-							<a href="./signin.html">{{request.user}}</a> <span class="dark-transp"> | </span>
+							<a href="{% url 'user_accounts' %}">{{request.user}}</a> <span class="dark-transp"> | </span>
 							<a href="{% url 'user_logout' %}">Logout</a>
 
                             {% else %}

@@ -59,10 +59,17 @@
 					<input type="text" class="form-control" name="phonenumber" placeholder="" required="required"  id="phone" oninvalid="setCustomValidity(' ')" onchange="setCustomValidity('')" onblur="phoneValid()">
 					
 				</div> <!-- form-group end.// -->
+				
 
 				<span id="phoneReq" class="formValid"  style="display: none;color: red;">Field Required*</span>
             <span id="phoneErr" class="formValid"  style="display: none;color: red;">only numbers*</span>
 			<span id="phoneLen" class="formValid"  style="display: none;color: red;">10 character*</span>
+
+			<div class="form-group">
+				<label>Referal Number</label>
+				<input type="text" class="form-control" name="referal" placeholder=""   id="referal" onblur="checkreferal()">
+				
+			</div> <!-- form-group end.// -->
 				
 				<div class="form-row">
 					<div class="form-group col-md-6">
@@ -112,6 +119,29 @@
 			}
 		})
 		
+	}
+
+
+	function checkreferal(){
+		let ref=document.getElementById('referal').value;
+		$.ajax({
+			url:"{% url 'check_referal' %}",
+			type:"get",
+			data:{referal:ref},
+			success:function(data){
+				if(data=="available"){
+					
+				}else{
+
+					alert("invalid reference")
+					$("#referal").val(""); 
+
+				}
+				
+				
+			}
+		})
+
 	}
 
 

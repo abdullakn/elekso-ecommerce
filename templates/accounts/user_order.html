@@ -1,0 +1,135 @@
+
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+
+<div class="container-fluid my-5 d-flex justify-content-center">
+    <div class="card card-1">
+        <div class="card-header bg-white">
+            <div class="media flex-sm-row flex-column-reverse justify-content-between ">
+                <div class="col my-auto">
+                    <h4 class="mb-0">Thanks for your Order,<span class="change-color">{{request.user}}</span> !</h4>
+                </div>
+               
+            </div>
+        </div>
+        <div class="card-body">
+          {% for order in order%}
+            <div class="row">
+                <div class="col">
+                    <div class="card card-2">
+                        <div class="card-body ">
+                            <div class="media p-3">
+                                <div class="sq align-self-center "> <img class="img-fluid my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="{{order.product.image1.url}}" width="50" height="50" /> </div>
+                                <div class="media-body my-auto text-right">
+                                    <div class="row my-auto flex-column flex-md-row">
+                                        <div class="col my-auto">
+                                            <h6 class="mb-0">{{order.product}}</h6>
+                                        </div>
+                                        <div class="col-auto my-auto"> <small>{{order.product.category}} </small></div>
+                                        <div class="col my-auto"> <small> {{order.product.color}}</small></div>
+                                        <div class="col my-auto"> <small> {{order.updated_at}}</small></div>
+                                        <div class="col my-auto"> <small> {{order.status}}</small></div>
+                                        
+                                        <div class="col my-auto">
+                                            <h6 class="mb-0">&#8377;{{order.product.price}}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if order.user_cancelled == "True" %}
+                            <p style="color:red">Cancelled</p>
+                            {% else %}
+                            {% if order.status == 'Delivered' %}
+                            <p style="color: green;">Delivered</p>
+                            {% else %}
+                            <a href="{% url 'cancel_order' order.id %}"><button class=" mt-2 btn btn-sm btn-danger">Cancel Order</button></a>
+                            {% endif %}
+                            {% endif %}
+                            <hr class="my-3 ">
+                            <div class="row">
+                                <div class="col-md-3 mb-3"> <small> Track Order <span><i class=" ml-2 fa fa-refresh" aria-hidden="true"></i></span></small> </div>
+                                <div class="col mt-auto">
+                                    <div class="progress my-auto">
+                                        {% if order.status == 'Cancelled' %}
+                                        
+                                        <div class="progress-bar progress-bar rounded" style="width: 3%;background-color:red" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        {% elif order.status == 'Pending' %} 
+                                        <div class="progress-bar progress-bar rounded" style="width: 32%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        {% elif order.status == 'Accepted' %} 
+                                        <div class="progress-bar progress-bar rounded" style="width: 65%;background-color:yellow" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+
+                                        {% else %}
+                                        <div class="progress-bar progress-bar rounded" style="width: 100%;background-color:green" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+
+                                        {% endif %}
+                                    </div>
+                                    <div class="media row justify-content-between ">
+                                        <div class="col-auto text-right"><span> <small class="text-right mr-sm-2"></small> <i class="fa fa-circle active"></i> </span></div>
+                                        <div class="flex-col"> <span> <small class="text-right mr-sm-2">Pending</small><i class="fa fa-circle active"></i></span></div>
+                                        <div class="col-auto flex-col-auto"><small class="text-right mr-sm-2">Accepted</small><span> <i class="fa fa-circle"></i></span></div>
+                                        <div class="col-auto flex-col-auto"><small class="text-right mr-sm-2">Delivered</small><span> <i class="fa fa-circle"></i></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+           
+               
+            <!-- <div class="row mt-4">
+                <div class="col">
+                    <div class="row justify-content-between">
+                        <div class="col-auto">
+                            <p class="mb-1 text-dark"><b>Order Details</b></p>
+                        </div>
+                        <div class="flex-sm-col text-right col">
+                            <p class="mb-1"><b>Total</b></p>
+                        </div>
+                        <div class="flex-sm-col col-auto">
+                            <p class="mb-1">&#8377;4,835</p>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between">
+                        <div class="flex-sm-col text-right col">
+                            <p class="mb-1"> <b>Discount</b></p>
+                        </div>
+                        <div class="flex-sm-col col-auto">
+                            <p class="mb-1">&#8377;150</p>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between">
+                        <div class="flex-sm-col text-right col">
+                            <p class="mb-1"><b>GST 18%</b></p>
+                        </div>
+                        <div class="flex-sm-col col-auto">
+                            <p class="mb-1">843</p>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between">
+                        <div class="flex-sm-col text-right col">
+                            <p class="mb-1"><b>Delivery Charges</b></p>
+                        </div>
+                        <div class="flex-sm-col col-auto">
+                            <p class="mb-1">Free</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row invoice ">
+                <div class="col">
+                    <p class="mb-1"> Invoice Number : 788152</p>
+                    <p class="mb-1">Invoice Date : 22 Dec,2019</p>
+                    <p class="mb-1">Recepits Voucher:18KU-62IIK</p>
+                </div>
+            </div> -->
+        </div>
+      
+    </div>
+</div>
+    
+
+{% endblock %}

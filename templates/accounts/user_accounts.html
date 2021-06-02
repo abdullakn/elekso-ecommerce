@@ -1,0 +1,67 @@
+{% extends 'accounts/base.html' %}
+
+{% block style %}
+
+<style>
+
+    .card:hover{
+        color: white;
+        background-color:#fb641b;
+    }
+
+    
+</style>
+
+{% endblock %}
+
+{% block content %}
+<div class="py-5">
+    <div class="container">
+      <div class="row hidden-md-up" style="margin-top: 150px; margin-bottom:150px">
+        <div class="col-md-4">
+            <a href="{% url 'user_profile' %}">
+          <div class="card text-center">
+            <div class="card-block p-3">
+              <h4 class="card-title my-2">My Profile</h4>
+              
+              <p class="card-text p-y-1">Edit Your Basic Details.</p>
+              <a href="#" class="card-link"></a>
+              <a href="#" class="card-link"></a>
+            </div>
+          </div>
+          </a>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url 'user_address' %}">
+          <div class="card text-center">
+            <div class="card-block p-3">
+              <h4 class="card-title">My Address</h4>
+             
+              <p class="card-text p-y-1">Manage your saved addresses</p>
+              <a href="#" class="card-link"></a>
+              <a href="#" class="card-link"></a>
+            </div>
+          </div>
+          </a>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url 'user_order' %}">
+          <div class="card text-center">
+            <div class="card-block p-3">
+              <h4 class="card-title">My Order</h4>
+              <p class="card-text p-y-1">View Track, Cancel Order</p>
+             
+              <a href="#" class="card-link"> </a>
+              <a href="#" class="card-link"></a>
+            </div>
+          </div>
+          </a>
+        </div>
+      </div><br>
+    
+      
+    </div>
+  </div>
+
+
+{%  endblock %}

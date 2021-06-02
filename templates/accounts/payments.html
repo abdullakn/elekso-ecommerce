@@ -1,0 +1,203 @@
+
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+
+<section class="section-content padding-y bg">
+<div class="container">
+
+<!-- ============================ COMPONENT 1 ================================= -->
+
+<div class="row">
+	<aside class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+              Billing Address
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Billing Address</h5>
+              <p class="card-text"></p>
+              <p class="card-text">{{order.full_address}}</p>
+              <p class="card-text">{{order.city}} , {{order.state}} , India</p>
+              <p class="card-text">{{order.full_address}}</p>
+              <p class="card-text">{{order.phone}}</p>
+              <p class="card-text">{{order.email}}</p>
+              
+            </div>
+          </div>
+        <div class="card">
+            <div class="card-header">
+             <b>Payment Method</b> 
+            </div>
+               
+            <form action="" method="POST">{% csrf_token %}   
+
+		<header class="card-header">
+     
+			
+			<label class="form-check collapsed" data-toggle="collapse" data-target="#pay_paynet">
+				<input class="form-check-input" name="payment"  type="radio" value="paypal">
+				<h6 class="form-check-label"> 
+					Payment Option
+				</h6>
+			</label>
+		</header>
+		
+	
+	
+	<header class="card-header">
+		  
+		<label class="form-check" data-toggle="collapse" data-target="#pay_payme">
+			<input class="form-check-input" name="payment" type="radio" value="cod">
+			<h6 class="form-check-label"> Cash on Delivery  </h6>
+		</label>
+	</header>
+	<!-- collapse .// -->
+
+	
+
+          </div>
+        <div class="card">
+            <table class="table table-borderless table-shopping-cart">
+                <thead class="text-muted">
+                <tr class="small text-uppercase">
+                  <th scope="col">Product</th>
+                  <th scope="col" width="120">Quantity</th>
+                  <th scope="col" width="120">Price</th>
+                  
+                </tr>
+                </thead>
+                <tbody>
+                
+                    {% for cart_item in cart_items %}
+                <tr>
+                    <td>
+                        <figure class="itemside align-items-center">
+                            <div class="aside"><img src="{{ cart_item.product.image1.url }}" class="img-sm"></div>
+                            <figcaption class="info">
+                                <a href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name}}</a>
+                                <p class="text-muted small"><br> Brand: {{cart_item.product.brand }}</p>
+                            </figcaption>
+                        </figure>
+                    </td>
+                    
+	<td> 
+		<!-- col.// -->
+					<div class="col"> 
+						<div class="input-group input-spinner">
+						
+							<input type="text" class="form-control"  value="{{ cart_item.quantity }}">
+						
+						</div> <!-- input-group.// -->
+					</div> <!-- col.// -->
+	</td>
+                    
+                    <td> 
+                        <div class="price-wrap"> 
+                            <var class="price">{{ cart_item.sub_total }}</var> 
+                         
+                            {% if cart_item.product.offer_price == 'None' %}
+                            <small class="text-muted"> {{ cart_item.product.price}} each </small> 
+                            {% else %}
+                            <small class="text-muted"> {{ cart_item.product.offer_price}} each </small>
+                                  {% endif %}
+                        </div> <!-- price-wrap .// -->
+                    </td>
+                    
+                </tr>
+                
+                {% endfor %}
+                
+                </tbody>
+                </table>
+          </div>
+
+	</aside> <!-- col.// -->
+	<aside class="col-lg-4">
+
+		<div class="card">
+		<div class="card-body">
+			<dl class="dlist-align">
+			  <dt>Total price:</dt>
+			  <dd class="text-right">${{total}}</dd>
+			</dl>
+			<dl class="dlist-align">
+			  <dt>Tax:</dt>
+			  <dd class="text-right">{{tax}}</dd>
+			</dl>
+			<dl class="dlist-align">
+			  <dt> Grand Total:</dt>
+			  <dd class="text-right text-dark b"><strong>${{grand_total}}</strong></dd>
+			</dl>
+			<hr>
+     
+			
+			<!-- <a href="{% url 'checkout' %}" class="btn btn-primary btn-block">Cash on Delivery </a> -->
+     
+            <input type="submit" value="Order Now " class="btn btn-primary btn-block">
+            <div id="paypal-button-container" > 
+
+            </div>
+         
+<!-- <script src="https://www.paypal.com/sdk/js?client-id=AZb2Yl9zjxi0w_ZN0M7YLlb5rTkuaC9OlM-SjaJRNliiR0Ow-god3GSYChC4ca-qWwKvMGpsZOyz9Xpj&currency=USD"></script>
+   
+<form action="{% url 'razorpay' %}" method="POST" style="margin-left: 675px;margin-top:20px">{% csrf_token %}
+  <script
+      src="https://checkout.razorpay.com/v1/checkout.js"
+      data-key="rzp_test_geR1AvIEZJzphk"
+      data-amount="{{grand_total}}" 
+      data-currency="INR"
+      data-order_id="{{payment.id}}"
+      data-buttontext="Pay with Razorpay"
+      data-name="Acme Corp"
+      data-description="A Wild Sheep Chase is the third novel by Japanese author Haruki Murakami"
+      data-image="https://example.com/your_logo.jpg"
+      data-prefill.name="Gaurav Kumar"
+      data-prefill.email="gaurav.kumar@example.com"
+      data-theme.color="green"
+  ></script>
+  <input type="hidden" custom="Hidden Element" name="hidden">
+  </form> -->
+
+			
+		</div> <!-- card-body.// -->
+		</div> <!-- card.// -->
+  </form>
+
+
+<form action="{% url 'verify_coupen' %}" method="POST">{% csrf_token %}
+  <input type="text" class="form-control" name="coupen"><br>
+      <!-- <a href="" class="btn btn-success btn-block">Add Coupen </a> -->
+       <button type="submit" class=" btn btn-success btn-block">Apply Coupen</button>
+       <!-- <input type="submit"> -->
+</form>
+
+{% if messages %}
+{% for message in messages %}
+{% if message.tags == "success" %}
+  <div class= "alert alert-success">{{ message }}</div>
+{% elif message.tags == "error" %}
+  <div class= "alert alert-danger">{{ message }}</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+ 
+
+
+</aside> <!-- col.// -->
+
+</div>
+
+
+
+
+
+</div> <!-- row.// -->
+<!-- ============================ COMPONENT 1 END .// ================================= -->
+
+</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+
+{% endblock %}
