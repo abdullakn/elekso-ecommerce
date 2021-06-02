@@ -8,7 +8,8 @@
 
 <!-- ============================ COMPONENT 1 ================================= -->
 {% if not cart_items %}
-<h2>Cart is Empty</h2>
+<h2  class="text-center">Cart is Empty</h2>
+<a  href="{% url 'user_home' %}"><button class="btn btn-info  d-flex justify-content-center">Continue Shopping</button></a>
 {% else%}
 <div class="row">
 	<aside class="col-lg-9">
@@ -35,32 +36,137 @@
 			</figcaption>
 		</figure>
 	</td>
+
 	<td> 
 		<!-- col.// -->
 					<div class="col"> 
 						<div class="input-group input-spinner">
 							<div class="input-group-prepend">
-							<a href="{% url 'remove_cart' cart_item.product.id %}" class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </a>
-							</div>
-							<input type="text" class="form-control"  value="{{ cart_item.quantity }}">
+
+								<button 
+								class="btn btn-light" onClick="removeCart('{{cart_item.product.id}}')"  type="button" id="button-minus"> <i
+									class="fa fa-minus"></i> </button>
+						</div>
+						
+						<span  id="qty-{{cart_item.product.id}}" class="form-control">{{cart_item.quantity}}</span>
 							<div class="input-group-append">
-							<a  href="{% url 'add_cart' cart_item.product.id %}" class="btn btn-light" type="button" id="button-minus"> <i class="fa fa-plus"></i> </a>
-							</div>
+
+
+								<button
+									class="btn btn-light" onClick="addCart('{{cart_item.product.id}}')" type="button" id="button-plus"> <i
+										class="fa fa-plus"></i> </button>
+						
+							<!-- <button class="btn btn-light" value="{{cart_item.product.id}}" id="button-minus"> <i class="fa fa-minus"></i> </button> -->
+							<!-- <a href="" class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </a> -->
+						
+							<!-- </div> -->
+							<!-- <input type="text" class="form-control"  value="{{ cart_item.quantity }}"> -->
+							<!-- <div class="input-group-append"> -->
+							<!-- <a  href="{% url 'add_cart' cart_item.product.id %}"  class="btn btn-light" type="button" id="button-minus"> <i class="fa fa-plus"></i> </a> -->
+							<!-- <button class="btn btn-light" value="{{cart_item.product.id}}" id="button-plus"> <i class="fa fa-minus"></i> </button> -->
+						</div>
 						</div> <!-- input-group.// -->
 					</div> <!-- col.// -->
 	</td>
+
 	<td> 
 		<div class="price-wrap"> 
-			<var class="price">{{ cart_item.sub_total }}</var> 
-			<small class="text-muted"> {{ cart_item.product.price}} each </small> 
+			<var id="price-{{cart_item.product.id}}" class="price">{{ cart_item.sub_total }}</var> 
+			{% if cart_item.product.offer_price != 'None' %}
+			<small class="text-muted"> {{ cart_item.product.offer_price}} each </small> 
+			{% else %}
+			<small class="text-muted"> {{ cart_item.product.price}} each </small>
+            {% endif %}
 		</div> <!-- price-wrap .// -->
 	</td>
 	<td class="text-right"> 
-	<a href="{% url 'remove_cart_item' cart_item.product.id %}" class="btn btn-danger"> Remove</a>
+	<!-- <a href="{% url 'remove_cart_item' cart_item.product.id %}" class="btn btn-danger"> Remove</a> -->
+	<button class="btn btn-sm btn-danger"   style="background: #F44336;" onclick="return confirm ('are you sure Do you want to delete') ? window.location.href='{% url 'remove_cart_item' cart_item.product.id %}' : ''  " >Remove</button>
+
 	</td>
 </tr>
 
 {% endfor %}
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+	function addCart(id) {
+		console.log(id)
+		var data = {
+			csrfmiddlewaretoken: '{{ csrf_token }}',
+			product_id: id
+		    }
+			$.ajax({
+                url : "{% url 'add_cart_ajax' %}",
+                type: "POST",
+                data : data,
+                dataType : "json",
+                success: function(body){
+					console.log(body)
+					console.log(body.id)
+					//console.log(body.quantity)
+			       $('#qty-'+body.id).html(body.quantity) 
+                   // $('#qty-'+body.id).html(body.quantity)
+                   $('#price-'+body.id).html(body.sub_total)
+                   $('#total').html(body.total)
+                   $('#tax').html(body.tax)
+                   $('#grand_total').html(body.grand_total)
+                   // Total()
+                    //on()
+                    //alert('success')
+                   // console.log(body.quantity)
+                   // console.log(body.total,'total')
+                                    
+                    //if(body.quantity == 0){
+                    //    window.location.reload()
+                    //    }
+                }
+            });
+	   
+		
+	}
+
+</script>
+
+<script>
+	function removeCart(id) {
+		console.log(id)
+		var data = {
+			csrfmiddlewaretoken: '{{ csrf_token }}',
+			product_id: id
+		    }
+			$.ajax({
+                url : "{% url 'remove_cart_ajax' %}",
+                type: "POST",
+                data : data,
+                dataType : "json",
+                success: function(body){
+					console.log(body)
+					console.log(body.id)
+					//console.log(body.quantity)
+			       $('#qty-'+body.id).html(body.quantity) 
+                   // $('#qty-'+body.id).html(body.quantity)
+                   $('#price-'+body.id).html(body.sub_total)
+                   $('#total').html(body.total)
+                   $('#tax').html(body.tax)
+                   $('#grand_total').html(body.grand_total)
+                   // Total()
+                    //on()
+                    //alert('success')
+                   // console.log(body.quantity)
+                   // console.log(body.total,'total')
+                                    
+                    if(body.quantity <= 1){
+                       window.location.reload()
+                       }
+                }
+            });
+	   
+		
+	}
+
+</script>
+
 
 </tbody>
 </table>
@@ -73,22 +179,22 @@
 		<div class="card-body">
 			<dl class="dlist-align">
 			  <dt>Total price:</dt>
-			  <dd class="text-right">${{total}}</dd>
+			  <dd id="total" class="text-right">${{total}}</dd>
 			</dl>
 			<dl class="dlist-align">
 			  <dt>Tax:</dt>
-			  <dd class="text-right"> ${{tax}}</dd>
+			  <dd id="tax" class="text-right">{{tax}}</dd>
 			</dl>
 			<dl class="dlist-align">
-			  <dt> Gtand Total:</dt>
-			  <dd class="text-right text-dark b"><strong>${{grand_total}}</strong></dd>
+			  <dt> Grand Total:</dt>
+			  <dd id="grand_total" class="text-right text-dark b"><strong>${{grand_total}}</strong></dd>
 			</dl>
 			<hr>
 			<p class="text-center mb-3">
-				<img src="./images/misc/payments.png" height="26">
+				<!-- <img src="./images/misc/payments.png" height="26"> -->
 			</p>
-			<a href="./place-order.html" class="btn btn-primary btn-block"> Checkout </a>
-			<a href="./store.html" class="btn btn-light btn-block">Continue Shopping</a>
+			<a href="{% url 'checkout' %}" class="btn btn-primary btn-block"> Checkout </a>
+			<a href="{% url 'user_home' %}" class="btn btn-light btn-block">Continue Shopping</a>
 		</div> <!-- card-body.// -->
 		</div> <!-- card.// -->
 
@@ -101,4 +207,7 @@
 </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
+
+
+
 {% endblock %}

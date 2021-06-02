@@ -1,0 +1,185 @@
+
+{% extends 'accounts/base.html' %}
+
+{% block dropdown %}
+<div class="dropdown-menu">
+	{% for cat in category %}
+	<a class="dropdown-item" href="{% url 'product_store' cat.slug %}">{{cat.name}}</a>
+	
+	{% endfor %}
+</div>
+{% endblock %}
+
+{% block content %}
+
+{% load static %}
+<link href="{% static '/css/cropper.min.css' %}" rel="stylesheet" type="text/css"/>
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-4 border-right">
+            
+            <!-- <input type="image"  class="d-flex flex-column align-items-center text-center p-3 py-5" src="/media/{{propic}}" width="150px" /> -->
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class=" image-pro rounded-circle mt-5" width="150px" src="/media/{{propic}}">
+                <form id="productForm" action="{% url 'user_propic' %}" style="width: 100vh" enctype="multipart/form-data" method="POST">{% csrf_token %}
+                    <label for="image1"></label><br>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group col-md-6 fsix py-3">
+                               
+                                <!-- <input type="file" accept="image/*" name="productImage" id="fileInput1" style="display: none;margin-left: 200px;" />    -->
+                            <input accept="image/*" id="fileInput1" type="file" name="productImage" required style="margin-left: 200px;display:none"></div>
+                            <textarea name="pro_img1" id="pro_img1" style="display: none;"></textarea>
+                            <img src=""  id="imageview1" style="height: auto;width: 100px;">
+                        </div>
+    
+                        <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                       <div class="modal-dialog modal-dialog-centered" role="document">
+                           <div class="modal-content">
+                               <div class="modal-header">
+                                   <h5 class="modal-title" id="exampleModalLongTitle">Crop Image</h5>
+                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                       <span aria-hidden="true">&times;</span>
+                                   </button>
+                               </div>
+                               <div class="modal-body">
+                                   <div class="result1"></div>
+                               </div>
+                               <div class="modal-footer">
+                                   <button type="button" class="btn  btn-secondary" data-dismiss="modal">Close
+                                   </button>
+                                   <button type="button" id="btnCrop1" class="btn save1 btn-primary">Save changes
+                                   </button>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+                <input type="submit" style="margin-left: 0;" class="btn btn-sm btn-primary" value="Add Image"> 
+                
+    
+                   
+                   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+                   <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
+                   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js"></script>
+                   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                   <script>
+                       let result1 = document.querySelector('.result1'),
+                           save1 = document.querySelector('.save1'),
+                           cropped1 = document.querySelector('.imageview1'),
+                           upload1 = document.querySelector('#fileInput1'),
+                           cropper1 = '';
+               
+                       upload1.addEventListener('change', (e) => {
+                               var fileName = document.getElementById("fileInput1").value;
+                               var idxDot = fileName.lastIndexOf(".") + 1;
+                               var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+                               if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+                                   if (e.target.files.length) {
+                                       // start file reader
+                                       const reader = new FileReader();
+                                       reader.onload = (e) => {
+                                           if (e.target.result) {
+                                               // create new image
+                                               $("#exampleModalCenter1").modal("show");
+                                               let img1 = document.createElement('img');
+                                               img1.id = 'image1';
+                                               img1.src = e.target.result
+                                               // clean result before
+                                               result1.innerHTML = '';
+                                               // append new image
+                                               result1.appendChild(img1);
+                                               // init cropper
+                                               cropper1 = new Cropper(img1, {
+                                                   aspectRatio: 3 / 4,
+                                                   viewMode: 2,
+                                               });
+                                           }
+                                       };
+                                       reader.readAsDataURL(e.target.files[0]);
+                                   }
+                               }
+                               else {
+                                   swal("this file type is not supported", {
+                                       icon: "error",
+                                   })
+                                   fileName = "";
+                                   console.log(fileName)
+                               }
+                           }
+                       );
+               
+                       save1.addEventListener('click', (e) => {
+                           e.preventDefault();
+                           // get result to data uri
+                           let imgSrc1 = cropper1.getCroppedCanvas({
+                               width: 300,
+                               height: 500// img disp value
+                           }).toDataURL();
+                           $("#exampleModalCenter1").modal("hide");
+                           imageview1.src = imgSrc1;
+                           $('#pro_img1').val(imgSrc1)
+                       
+                         
+                       });
+                          
+             
+                
+                
+                   </script>
+
+                 </form>
+                   <script>
+                    $('.image-pro').click(function() {
+                        $("input[id='fileInput1']").click();
+                       
+                        
+                    });
+                   </script>
+            <br>
+               
+                <span class="font-weight-bold">{{request.user}}  </span>
+                <br>
+
+              <span class="text-black-50">{{user.email}}</span> 
+                {% if referal == None %} 
+                 {% else %} 
+                <span>Referal ID : {{referal}} </span> 
+                {% endif %}
+                {% if coupen %}
+                <span>  Referal Purchase Coupen : <b>{% for coupen in coupen %}{{coupen}} , {% endfor %}</b> </span> 
+                {% else %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-8 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile Settings</h4>
+                </div>
+
+                <form action="{% url 'user_profile' %}" method="POST">
+                    {% csrf_token %}
+                
+                <div class="row mt-3">
+                    <div class="col-md-12"><label class="labels">Mobile Number</label><input type="number" name="phone" class="form-control" placeholder="enter phone number" value="{{user.phone_number}}"></div>
+                    
+                    <div class="col-md-12 mt-3"><label class="labels">Email ID</label><input type="text" name="email" class="form-control" placeholder="enter email id" value="{{user.email}}"></div>
+                   
+                </div>
+
+                
+                <div class="mt-5 text-center"><button class="btn btn-primary" > Save Profile</button></div>
+
+            </form>
+            </div>
+        </div>
+       
+    </div>
+</div>
+</div>
+</div>
+    
+
+{% endblock %}

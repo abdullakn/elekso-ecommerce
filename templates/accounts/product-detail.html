@@ -1,6 +1,12 @@
 {% extends 'accounts/base.html' %}
 {% load static %}
 
+{% block dropdown %}
+<div class="dropdown-menu">
+
+</div>
+{% endblock %}
+
 
 
 {% block content %}
@@ -11,106 +17,44 @@
 <div class="card">
 	<div class="row no-gutters">
 		<aside class="col-md-6">
-			<!-- <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css"/>
 
-			<div class="show" href="1.jpg">
-				<img src="{{ products.image1.url }}" id="show-img">
+
+
+			<div class="show" href="{{products.image1.url}}">
+				<img src="{{products.image1.url}}" id="show-img" style="margin: 10px; border: solid 1px;">
 			  </div>
-		  -->
-			  <!-- Secondary carousel image thumbnail gallery -->
-		  
-			  <!-- <div class="small-img">
-			   <img src="images/next-icon.png" class="icon-left" alt="" id="prev-img">
+		
+		 
+			  <div  class="small-img" >
+			  
 				<div class="small-container">
 				 <div id="small-img-roll">
-				   <img src="{{ products.image1.url }}" class="show-small-img" alt="">
-				   <img src="{{ products.image2.url }}" class="show-small-img" alt="">
-				   <img src="{{ products.image3.url }}" class="show-small-img" alt="">
-				   <img src="{{ products.image4.url }}" class="show-small-img" alt="">
+				   <img src="{{products.image1.url}}" class="show-small-img" alt="">
+				   <img src="{{products.image2.url}}" class="show-small-img" alt="">
+				   <img src="{{products.image3.url}}" class="show-small-img" alt="">
+				   <img src="{{products.image4.url}}" class="show-small-img" alt="">
 				 </div>
 				</div>
-			   <img src="images/next-icon.png" class="icon-right" alt="" id="next-img">
-			  </div> --> -->
-
-			  <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
-<!-- 
-<script src="{% static 'js/main.js' %}"></script>
-<script src="{% static 'js/zoom-image.js' %}" ></script> -->
-<article class="gallery-wrap d-flex "> 
-	<div style="width:70px;height:300px;background-color:white;margin-top:80px">
-		<a href="#"><img id="side-img1" onclick="img1Display()" class="img-thumbnail" src="{{ products.image1.url }}" width="70px" height="70px" style="margin-bottom: 5px;"></a>
-		<a href="#"><img id="side-img2" onclick="img2Display()" class="img-thumbnail" src="{{ products.image2.url }}" width="70px" height="70px" style="margin-bottom: 5px;"></a>
-		<a href="#"><img id="side-img3"  onclick="img3Display()" class="img-thumbnail" src="{{ products.image3.url }}" width="70px" height="70px" style="margin-bottom: 5px;"></a>
-		<a href="#"><img id="side-img4"  onclick="img4Display()" class="img-thumbnail" src="{{ products.image4.url }}" width="70px" height="70px" style="margin-bottom: 5px;"></a>
+			   
+			  </div>
+			  <link rel="stylesheet" href="{% static '/css/style.css' %}">
+			  <script src="{% static '/js/zoom-image.js'%}"></script>
+			  <script src="{% static '/js/main.js' %}"></script>	
 	
-	
-
-
-	</div>
-	<div class="img-big-wrap " id="img-container">
-	   <a href="#"><img id="img1" src="{{ products.image1.url }}"></a>
-	   <a href="#"><img id="img2"  src="{{ products.image2.url }}" style="display: none "></a>
-	   <a href="#"><img id="img3" src="{{ products.image3.url }}" style="display: none "></a>
-	   <a href="#"><img id="img4" src="{{ products.image4.url }}" style="display: none "></a>
-	</div>
-
-
-	<script>
-		var s_img1=document.getElementById("side-img1");
-		var s_img2=document.getElementById("side-img2");
-		var s_img3=document.getElementById("side-img3");
-		var s_img4=document.getElementById("side-img4");
-
-
-
-		var img1=document.getElementById("img1");
-		var img2=document.getElementById("img2");
-		var img3=document.getElementById("img3");
-		var img4=document.getElementById("img4");
-
-
-		function img1Display(){
-			img1.style.display="block";
-			img2.style.display="none";
-			img3.style.display="none";
-			img4.style.display="none";
-
-		}
-
 		
-		function img2Display(){
-			img2.style.display="block";
-			img1.style.display="none";
-			img3.style.display="none";
-			img4.style.display="none";
 
-		}
-		
-		function img3Display(){
-			img2.style.display="none";
-			img1.style.display="none";
-			img3.style.display="block";
-			img4.style.display="none";
-
-		}
-		
-		function img4Display(){
-			img2.style.display="none";
-			img1.style.display="none";
-			img3.style.display="none";
-			img4.style.display="block";
-
-		}
-	</script>
-</article> 
 		</aside>
-		<main class="col-md-6 border-left">
+		
 <article class="content-body">
 
 <h2 class="title">{{products.product_name}}</h2>
 
 <div class="mb-3"> 
+	{% if products.offer_price %}
+	<var class="price h4">${{products.offer_price}}  </var> <s style="color:red">${{products.price}}</s> <b>{{products.offer_percentage}} %offf</b>
+	{% else %}
 	<var class="price h4">${{products.price}}</var> 
+	{% endif %}
 </div> 
 
 <p>{{products.description}}	</p>
@@ -135,6 +79,10 @@
 		
 	</table>
 
+	{% if products.stock < 1 %}
+
+	<p style="color: red;">Out Of Stock</p>
+    {% else %}
 	{% if in_cart %}
 	<a href="" class="btn btn-success" style="color:white"> <span class="text">In Cart</span> <i class="fas fa-check"></i>  </a>
 
@@ -145,8 +93,9 @@
 
 	<a href="{% url 'add_cart' products.id %}" class="btn" style="background-color: #fb641b;color:white"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
      {% endif %}
+	 {% endif %}
 </article> <!-- product-info-aside .// -->
-		</main> <!-- col.// -->
+		
 	</div> <!-- row.// -->
 </div> <!-- card.// -->
 <!-- ============================ COMPONENT 1 END .// ================================= -->
@@ -183,6 +132,100 @@
 			</ul>
 		 </div>
 		</div>
+
+	<hr>
+<div class="row">
+	<div class="col-md-9">
+
+<form action="{% url 'submit_review' products.id %}" method="POST">
+
+	{% csrf_token %}
+	<h5>Write Your Review</h5>
+	<div>
+		<div class="rate">
+			<input type="radio" name="rating" id="rating5" value="5" required><label for="rating5" title="5"></label>
+			<input type="radio" name="rating" id="rating4" value="4" required><label for="rating4" title="4"></label>
+			<input type="radio" name="rating" id="rating3" value="3" required><label for="rating3" title="3"></label>
+			<input type="radio" name="rating" id="rating2" value="2" required><label for="rating2" title="2"></label>
+			<input type="radio" name="rating" id="rating1" value="1" required><label for="rating1" title="1"></label>
+
+		</div>
+		Review Title
+		<input type="text"  class="form-control" name="subject"><br>
+		Review
+		<textarea name="review" id=""  rows="4" class="form-control"></textarea>
+		<br>
+		{% if user.is_authenticated %}
+		{% if orderproduct %}
+		<input type="submit" value="Submit Review" class="btn btn-info">
+		{% else %}
+		<p style="color: red;">You Must Purchase the product to post the review</p>
+		{% endif %}
+		
+		{% else %}
+		<p style="color: red;">You Must logged in to post a review <a href="{% url 'login' %}">Login Now</a></p>
+		{% endif %}
+	</div>
+
+</form>
+<br>
+{% if messages %}
+{% for message in messages %}
+	{% if message.tags == "success" %}
+		<div class= "alert alert-success">{{ message }}</div>
+	{% elif message.tags == "error" %}
+		<div class= "alert alert-danger">{{ message }}</div>
+	{% endif %}
+	{% endfor %}
+	{% endif %}
+
+		
+<header class="section-heading">
+	<h3>Customer Reviews </h3>  
+	<p>{{count}} Reviews</p>
+	
+	</header>
+
+	{% for review in review %}
+
+<article class="box mb-3">
+<div class="icontext w-100">
+
+	
+	<div class="text">
+		<span class="date text-muted float-md-right">{{review.updated_at}}</span>  
+		<h6 class="mb-1">{{review.user}} </h6>
+		<div class="present-rating">
+			<span class="span-rate"> 
+			
+           {% if review.rating == 5 %}
+			<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+			{% elif review.rating == 4 %}
+			<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+			{% elif review.rating == 3 %}
+			<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+			{% elif review.rating == 2 %}
+			<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+			{% else %}
+			<i class="fas fa-star"></i>
+			{% endif %}
+		</span>
+	   </div>
+	</div>
+</div> <!-- icontext.// -->
+<div class="mt-3">
+	<h6>{{review.subject}}</h6>
+	<p>
+		{{review.review}}
+	</p>	
+</div>
+</article>
+{% endfor %}
+
+
+
+</div> <!-- col.// -->
+</div> <!-- row.// -->
 		
 	
 		

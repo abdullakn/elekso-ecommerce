@@ -49,7 +49,7 @@
 
           
           <div class="form-group">
-          	<a href="#" class="float-right" style="color: #fb641b;">Forgot password?</a> 
+          	<a href="{% url 'forgotpassword' %}" class="float-right" style="color: #fb641b;">Forgot password?</a> 
            
           </div> <!-- form-group form-check .// -->
           <div class="form-group">
@@ -57,9 +57,16 @@
           </div> <!-- form-group// -->    
       </form>
       <p style="color: red;">{{err}}</p>
+      {% for message in messages %}
+
+      <p style="color: red;">{{message}}</p>
+
+      {% endfor %}
       </div> <!-- card-body.// -->
     </div> <!-- card .// -->
 
+   
+     <p class="text-center mt-4">OTP Login? <a style="color: #fb641b;" href="{% url 'login_otp' %}">Login</a></p>
      <p class="text-center mt-4">Don't have account? <a style="color: #fb641b;" href="{% url 'user_registration' %}">Sign up</a></p>
      <br><br>
 <!-- ============================ COMPONENT LOGIN  END.// ================================= -->

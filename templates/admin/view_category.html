@@ -1,0 +1,73 @@
+{% extends 'admin/index.html' %}
+
+
+{% block content %}
+
+<div style="margin-left: 300px;">
+    <div class="container">
+        <div class="row" style="margin-top:50px;">
+            <h4 class="mb-4">
+                All Category
+            </h4>
+            <div class="col-md-4" >
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h4 class="text-center">
+                            Category</h4>
+                    </div>
+                   
+                    <ul class="list-group list-group-flush ">
+
+                        {% for cat in cat %}
+                        
+                        <li class="list-group-item"><i class="icon-ok text-danger"></i><form action="{% url 'edit_category' cat.id%}" method="POST">{% csrf_token %}<input type="text" value="{{cat.name}}" name="category"> <a class="" style="position:absolute;left:200px" href=""><button type="submit" class="btn btn-sm btn-success">Edit</button> </a> </form> <br><a class=""  href="{% url 'delete_category' cat.id %}"><button class="btn btn-sm btn-danger">Delete</button> </a>  </li>
+                      
+                         {% endfor %}
+                    </ul>
+                 
+                </div>
+            </div>
+         
+           
+           
+        </div>
+        <div class="row" style="margin-top:50px;">
+            <h4 class="mb-4" >
+
+                All Brand
+                
+            </h4>
+            <div class="col-md-4" >
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h4 class="text-center">
+                            Brand</h4>
+                    </div>
+                   
+                    <ul class="list-group list-group-flush ">
+
+                        {% for cat in cat %}
+                        <li class="list-group-item text-center" style="background-color: rgb(157, 219, 198);"><i class="icon-ok "></i>{{cat}}  </li>
+                        {% for brand  in brand %}
+
+                        {% if brand.category == cat %}
+                        
+                        <li class="list-group-item"><i class="icon-ok text-danger"></i>{{brand.brand}}  <a class="" style="position:absolute;left:200px" href=""><button class="btn btn-sm btn-success">Edit</button> </a>  <a class="" style="position:absolute;left:250px" href=""><button class="btn btn-sm btn-success">Delete</button> </a> </li>
+                        {% endif %}
+                      
+                         {% endfor %}
+                         {% endfor %}
+                    </ul>
+                 
+                </div>
+            </div>
+         
+           
+           
+        </div>
+    </div>
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,48 @@
+
+{% extends 'admin/index.html' %}
+
+
+{% block content %}
+<div class="col-xs-4" style="margin-left: 400px;">
+    <h1>Add Coupen</h1>
+    <hr>
+<form method="POST" action="{% url 'add_coupen' %}">
+    {% csrf_token %}
+   
+ 
+
+      <div class="form-group">
+        <label for="exampleInputEmail1">Coupen Title</label>
+        <input type="text"  name="coupen_title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Coupen Title">
+        
+      </div>
+     
+      <div class="form-group">
+        <label for="exampleInputEmail1">Coupen Code</label>
+        <input type="text"  name="code" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Coupen Code">
+        
+      </div>
+     
+      <div class="form-group">
+        <label for="exampleInputEmail1">Offer In Percentage</label>
+        <input type="number" min="1" max="99" name="offer" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Percentage">
+        
+      </div>
+     
+   
+    
+    <input type="submit" class="btn btn-sm " style="background-color: brown; color:white">
+
+</form>
+
+<br>
+<br>
+
+<br>
+<br>
+</div>
+
+
+{% endblock %}
+
+

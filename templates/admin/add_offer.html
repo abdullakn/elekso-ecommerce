@@ -1,0 +1,89 @@
+
+{% extends 'admin/index.html' %}
+
+
+{% block content %}
+<div class="col-xs-4" style="margin-left: 400px;">
+    <h1>Add Offer to Category</h1>
+    <hr>
+<form method="POST" action="{% url 'category_offer' %}">
+    {% csrf_token %}
+    Category:
+    <div class="form-group">
+    <select class="form-control " name="category" aria-label="Default select example">
+        <option selected>-------</option>
+        <option value="Laptop">Laptop</option>
+        <option value="Mobile Phones">Mobile Phones</option>
+        
+      </select>
+    </div>
+
+      <div class="form-group">
+        <label for="exampleInputEmail1">Offer In Percentage</label>
+        <input type="number" min="1" max="99" name="offer" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Percentage">
+        
+      </div>
+      <div class="form-group">
+        <label for="example-date-input" class=""></label>
+          <div class="">
+            <label for="exampleInputEmail1">Start Offer</label>
+         <input class="form-control" name="start" type="date" value="" id="example-date-input">
+         <br>
+         <label for="exampleInputEmail1">End Offer</label>
+         <input class="form-control" name="end" type="date" value="" id="example-date-input">
+         </div>
+        
+        </div>
+   
+    
+    <input type="submit" class="btn btn-sm " style="background-color: brown; color:white">
+
+</form>
+
+<br>
+<br>
+
+<h1>Add Offer to Product</h1>
+<form method="POST" action="{% url 'product_offer' %}">
+    {% csrf_token %}
+    Product:
+    <div class="form-group">
+    <select class="form-control" name="product" aria-label="Default select example">
+        <option selected>-------</option>
+        {% for product in product %}
+           <option value="{{product.id}}">{{product.product_name}}</option>
+        {% endfor %}
+        
+      </select>
+     </div>
+
+
+      <div class="form-group">
+        <label for="exampleInputEmail1">Offer In Percentage</label>
+        <input type="number" min="1" max="99" name="offer" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Percentage">
+        
+      </div>
+      <div class="form-group">
+        <label for="example-date-input" class=""></label>
+          <div class="">
+            <label for="exampleInputEmail1">Start Offer</label>
+         <input class="form-control" name="start" type="date" value="" id="example-date-input">
+         <br>
+         <label for="exampleInputEmail1">End Offer</label>
+         <input class="form-control" name="end" type="date" value="" id="example-date-input">
+         </div>
+        
+        </div>
+   
+    
+    <input type="submit" class="btn btn-sm " style="background-color: brown; color:white">
+
+</form>
+<br>
+<br>
+</div>
+
+
+{% endblock %}
+
+
