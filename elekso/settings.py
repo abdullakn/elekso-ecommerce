@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -83,15 +83,27 @@ WSGI_APPLICATION = 'elekso.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME':'elekso_new',
+#         'USER':'postgres',
+#         'PASSWORD':'Abdulla@123',
+#         'HOST':'localhost'
+#     }
+# }
+
 DATABASES = {
+
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'elekso_new',
-        'USER':'postgres',
-        'PASSWORD':'Abdulla@123',
-        'HOST':'localhost'
+
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'sqlite3.db',
+
     }
+     
 }
+
 
 
 # Password validation
