@@ -12,17 +12,14 @@
 
 <link href="{% static '/css/cropper.min.css' %}" rel="stylesheet" type="text/css"/>
     <div style="margin-left: 300px;">
-        <h1>Edit Products</h1>
+        <h1>Add Products</h1>
         <hr>
 
     <form method="POST" enctype="multipart/form-data" id="productForm" data-brand-url="{% url 'ajax_load_brands' %}">
         {% csrf_token %}
         {{ form|crispy }}
 
-       
-
-        
-        <br>
+        <input type="submit" value="Submit">
             
         <textarea name="pro_img1" id="pro_img1" style="display: none;"></textarea>
         <img src="" id="imageview1" style="height: auto;width: 100px;">
@@ -32,8 +29,6 @@
         <img src="" id="imageview3" style="height: auto;width: 100px;">
         <textarea name="pro_img4" id="pro_img4" style="display: none;"></textarea>
         <img src="" id="imageview4" style="height: auto;width: 100px;">
-        <input type="submit" class="btn btn-block  btn-primary" value="Add Product">
-        <br>
 
 
         <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog"
@@ -416,14 +411,18 @@
 
 <script>
 
+ 
 
-    //prevent e in input price field
-    document.querySelector(".price").addEventListener("keypress", function (evt) {
-        if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
-        {
-            evt.preventDefault();
-        }
-    });
+
+        //prevent e in input price field
+        document.querySelector(".price").addEventListener("keypress", function (evt) {
+            if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
+            {
+                evt.preventDefault();
+            }
+        });
+   
+
 </script>
     
 {% endblock %}
